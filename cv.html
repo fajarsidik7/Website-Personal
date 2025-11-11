@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fajar Sidik — CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --muted: #9aa6bf;
+            --accent: #ff7a59;
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-2: rgba(255, 255, 255, 0.02);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+            color: #e6eef8;
+            background: linear-gradient(180deg, #071025 0%, #071025 50%, #041427 100%);
+            -webkit-font-smoothing: antialiased
+        }
+
+        /* Canvas background for particles */
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 28px
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border-radius: 18px;
+            padding: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6)
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 0 auto 14px;
+            box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6);
+            transform: translateZ(0)
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 6px 0 2px;
+            text-align: center
+        }
+
+        .role {
+            font-size: 13px;
+            color: var(--accent);
+            text-align: center;
+            font-weight: 700
+        }
+
+        .meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 14px
+        }
+
+        .meta div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        /* Fitness stats pill */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px
+        }
+
+        .stat {
+            background: var(--glass);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center
+        }
+
+        .stat h3 {
+            margin: 0;
+            font-size: 16px
+        }
+
+        .stat p {
+            margin: 2px 0 0;
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        /* SKILLS */
+        .skills {
+            margin-top: 14px
+        }
+
+        .skill {
+            margin-bottom: 10px
+        }
+
+        .skill .bar {
+            height: 10px;
+            background: var(--glass-2);
+            border-radius: 999px;
+            overflow: hidden
+        }
+
+        .skill .bar>i {
+            display: block;
+            height: 100%;
+            width: 0;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent), #ffd56b);
+            transition: width 1s cubic-bezier(.2, .9, .2, 1)
+        }
+
+        /* MAIN CARD */
+        .main {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            padding: 20px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            min-height: 520px;
+            box-shadow: 0 10px 30px rgba(3, 8, 20, 0.6)
+        }
+
+        .hero {
+            display: flex;
+            gap: 18px;
+            align-items: center
+        }
+
+        .hero .intro {
+            flex: 1
+        }
+
+        .hero h2 {
+            margin: 0;
+            font-size: 22px
+        }
+
+        .hero p {
+            margin: 6px 0;
+            color: var(--muted)
+        }
+
+        /* crazy animated CTA buttons */
+        .ctas {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #1f8cff, #7b5bff);
+            padding: 10px 14px;
+            border-radius: 12px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.22);
+            transform: translateZ(0)
+        }
+
+        .btn.ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--muted);
+            font-weight: 600
+        }
+
+        /* timeline */
+        .timeline {
+            margin-top: 20px
+        }
+
+        .timeline-item {
+            padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.02)
+        }
+
+        .timeline-item .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--accent);
+            margin-top: 8px
+        }
+
+        .timeline-item h4 {
+            margin: 0;
+            font-size: 15px
+        }
+
+        .timeline-item p {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        /* project cards */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 18px
+        }
+
+        .proj {
+            padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transform: translateZ(0);
+            transition: transform .25s ease, box-shadow .25s ease
+        }
+
+        .proj:hover {
+            transform: translateY(-8px) rotateX(6deg);
+            box-shadow: 0 20px 40px rgba(3, 8, 20, 0.6)
+        }
+
+        .footer {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center
+        }
+
+        /* floating mode switch */
+        .mode {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            background: var(--glass);
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            z-index: 40
+        }
+
+        /* responsiveness */
+        @media(max-width:980px) {
+            .wrap {
+                grid-template-columns: 1fr;
+                max-width: 900px;
+                padding: 18px
+            }
+
+            .projects {
+                grid-template-columns: 1fr
+            }
+
+            .avatar {
+                margin-left: auto;
+                margin-right: auto
+            }
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                background: white;
+                color: black
+            }
+
+            #bgCanvas,
+            .mode {
+                display: none
+            }
+
+            .wrap {
+                box-shadow: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="bgCanvas"></canvas>
+    <div class="wrap">
+        <aside class="sidebar">
+            <div class="avatar"><img src="https://picsum.photos/seed/fajar/400/400" alt="Fajar Sidik"></div>
+            <h1>Fajar Sidik</h1>
+            <div class="role">Fitness / Frontend Developer</div>
+            <div class="meta">
+                <div>📍 Jakarta, Indonesia</div>
+                <div>✉️ fajars94911@gmail.com</div>
+                <div>🔗 github.com/fajarsidik7</div>
+            </div>
+
+            <div class="skills">
+                <h3 style="color:var(--muted);font-size:13px;margin:12px 0">Skills</h3>
+                <div class="skill">
+                    <div style="display:flex;justify-content:space-between;font-size:13px"><span>HTML &
+                            CSS</span><strong>92%</strong></div>
+                    <div class="bar"><i data-w="92%"></i></div>
+                </div>
+                <div class="skill">
+                    <div style="display:flex;justify-content:space-between;font-size:13px">
+                        <span>JavaScript</span><strong>88%</strong></div>
+                    <div class="bar"><i data-w="88%"></i></div>
+                </div>
+                <div class="skill">
+                    <div style="display:flex;justify-content:space-between;font-size:13px"><span>React /
+                            Next</span><strong>80%</strong></div>
+                    <div class="bar"><i data-w="80%"></i></div>
+                </div>
+                <div class="skill">
+                    <div style="display:flex;justify-content:space-between;font-size:13px"><span>Training &
+                            Coaching</span><strong>95%</strong></div>
+                    <div class="bar"><i data-w="95%"></i></div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <h3 id="calories">0</h3>
+                    <p>Calories/day (est.)</p>
+                </div>
+                <div class="stat">
+                    <h3 id="clients">0</h3>
+                    <p>Clients Trained</p>
+                </div>
+                <div class="stat">
+                    <h3 id="years">0</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat">
+                    <h3 id="recover">0%</h3>
+                    <p>Recovery Rate</p>
+                </div>
+            </div>
+
+            <div style="margin-top:14px"><button class="btn" id="contactBtn">Contact</button></div>
+        </aside>
+
+        <main class="main">
+            <section class="hero">
+                <div class="intro">
+                    <h2 id="greeting">Halo — Saya Fajar, the fitness-first developer</h2>
+                    <p>CV interaktif dengan animasi super gila, cocok untuk posisi Fitness Trainer, Coach, atau Frontend
+                        Developer yang suka desain & interaksi.</p>
+
+                    <div class="ctas">
+                        <button class="btn" id="hireBtn">Hire Me</button>
+                        <button class="btn ghost" id="downloadBtn">Download PDF</button>
+                    </div>
+                </div>
+                <div style="width:180px;text-align:center">
+                    <canvas id="ringCanvas" width="160" height="160"
+                        style="display:block;margin-left:auto;margin-right:auto"></canvas>
+                    <div style="font-size:13px;color:var(--muted);margin-top:8px">Fitness Score</div>
+                </div>
+            </section>
+
+            <section class="timeline">
+                <h3 style="margin:2px 0 12px;color:var(--muted)">Experience</h3>
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div>
+                        <h4>Senior Trainer • Elite Gym</h4>
+                        <p>2021 — Present — Program strength & hypertrophy untuk klien VIP</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div>
+                        <h4>Frontend Developer • Freelance</h4>
+                        <p>2019 — Present — UI/UX dan micro-interactions untuk startup</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div>
+                        <h4>Coach • FitNation</h4>
+                        <p>2016 — 2019 — Grup kelas & personal training</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="projects">
+                <div class="proj" data-tags="web,ui">
+                    <h4>FitTrack Web App</h4>
+                    <p style="color:var(--muted);font-size:13px">Sistem pelacakan latihan & progres, dengan dashboard
+                        interaktif.</p>
+                </div>
+                <div class="proj" data-tags="design,brand">
+                    <h4>Gym Branding</h4>
+                    <p style="color:var(--muted);font-size:13px">Identitas visual, poster & landing page untuk gym
+                        lokal.</p>
+                </div>
+                <div class="proj" data-tags="ml,ia">
+                    <h4>Nutrition Recommender</h4>
+                    <p style="color:var(--muted);font-size:13px">Prototype rekomendasi pola makan berbasis preferensi
+                        pengguna.</p>
+                </div>
+                <div class="proj" data-tags="mobile,app">
+                    <h4>Workout Planner</h4>
+                    <p style="color:var(--muted);font-size:13px">Aplikasi mobile PWA untuk workout split & timer.</p>
+                </div>
+            </section>
+
+            <div class="footer">© 2025 - Fajar Sidik | Built with ❤️ — Interactive CV</div>
+        </main>
+    </div>
+
+    <div class="mode">
+        <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="toggleTheme"> Auto
+            Mode</label>
+    </div>
+
+    <!-- Contact modal (simple) -->
+    <div id="contactModal"
+        style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60">
+        <div
+            style="width:420px;background:linear-gradient(180deg,#071021,#071428);padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(2,6,23,0.6)">
+            <h3 style="margin:0 0 6px">Contact Fajar</h3>
+            <p style="margin:0 0 12px;color:var(--muted)">Send a quick message</p>
+            <input id="nameI" placeholder="Your name"
+                style="width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px;background:transparent;color:white">
+            <input id="emailI" placeholder="Email"
+                style="width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px;background:transparent;color:white">
+            <textarea id="msgI" placeholder="Message"
+                style="width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px;background:transparent;color:white;height:90px"></textarea>
+            <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn"
+                    id="sendC">Send</button><button class="btn ghost" id="closeC">Close</button></div>
+        </div>
+    </div>
+
+    <script>
+        /* ========= Background particle system (canvas) ========= */
+        const bg = document.getElementById('bgCanvas');
+        const ctx = bg.getContext('2d');
+        function resize() { bg.width = innerWidth; bg.height = innerHeight }
+        addEventListener('resize', resize); resize();
+        let particles = [];
+        function rand(min, max) { return Math.random() * (max - min) + min }
+        for (let i = 0; i < 80; i++) { particles.push({ x: rand(0, innerWidth), y: rand(0, innerHeight), vx: rand(-0.2, 0.2), vy: rand(-0.2, 0.2), r: rand(0.6, 2.6), o: rand(0.05, 0.25) }) }
+        function step() {
+            ctx.clearRect(0, 0, bg.width, bg.height);
+            for (let p of particles) { p.x += p.vx; p.y += p.vy; p.x = (p.x + bg.width) % bg.width; p.y = (p.y + bg.height) % bg.height; ctx.beginPath(); ctx.fillStyle = 'rgba(255,255,255,' + p.o + ')'; ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); }
+            requestAnimationFrame(step);
+        }
+        step();
+
+        /* ====== Fill skill bars ====== */
+        document.querySelectorAll('.skill .bar > i').forEach(el => { setTimeout(() => el.style.width = el.getAttribute('data-w'), 300) });
+
+        /* ====== Stats counters animation ====== */
+        function animateValue(id, start, end, duration) { const el = document.getElementById(id); let startTime = null; function animate(t) { if (!startTime) startTime = t; let progress = Math.min((t - startTime) / duration, 1); let cur = Math.floor(progress * (end - start) + start); el.textContent = (id === 'recover' ? Math.round(progress * (end - start) + start) + '%' : Math.floor(cur)); if (progress < 1) requestAnimationFrame(animate) } requestAnimationFrame(animate) }
+        animateValue('calories', 1200, 2450, 2000); animateValue('clients', 0, 128, 1800); animateValue('years', 0, 6, 1600); animateValue('recover', 70, 92, 1800);
+
+        /* ====== Animated ring (fitness score) ====== */
+        const ring = document.getElementById('ringCanvas'); const rctx = ring.getContext('2d');
+        function drawRing(score) {
+            const w = ring.width, h = ring.height; rctx.clearRect(0, 0, w, h); const cx = w / 2, cy = h / 2, rad = 64; rctx.lineWidth = 12;
+            // background
+            rctx.beginPath(); rctx.strokeStyle = 'rgba(255,255,255,0.06)'; rctx.arc(cx, cy, rad, 0, Math.PI * 2); rctx.stroke();
+            // gradient arc
+            const end = (Math.PI * 2) * (score / 100);
+            const g = rctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#ff7a59'); g.addColorStop(1, '#ffd56b');
+            rctx.beginPath(); rctx.strokeStyle = g; rctx.lineCap = 'round'; rctx.arc(cx, cy, rad, -Math.PI / 2, end - Math.PI / 2); rctx.stroke();
+            // text
+            rctx.fillStyle = 'white'; rctx.font = '700 18px Inter'; rctx.textAlign = 'center'; rctx.fillText(score + '', cx, cy + 6);
+        }
+        let score = 0; const targetScore = 86; function animScore() { const step = () => { score += (targetScore - score) * 0.12; if (Math.abs(score - targetScore) < 0.2) score = targetScore; drawRing(Math.round(score)); if (score < targetScore) requestAnimationFrame(step) }; step(); } animScore();
+
+        /* ====== Project tilt & micro interactions ====== */
+        document.querySelectorAll('.proj').forEach(card => {
+            card.addEventListener('mousemove', e => { const r = card.getBoundingClientRect(); const cx = r.left + r.width / 2, cy = r.top + r.height / 2; const dx = (e.clientX - cx) / (r.width / 2); const dy = (e.clientY - cy) / (r.height / 2); card.style.transform = `translateY(-6px) rotateX(${dy * 6}deg) rotateY(${dx * 10}deg)`; });
+            card.addEventListener('mouseleave', () => { card.style.transform = 'translateY(0) rotateX(0) rotateY(0)' });
+            card.addEventListener('click', () => { navigator.clipboard.writeText(card.querySelector('h4').innerText + ' — Project copied!'); card.style.boxShadow = '0 40px 80px rgba(0,0,0,0.6)'; setTimeout(() => card.style.boxShadow = '0 0 0 transparent', 600) });
+        });
+
+        /* ====== Contact modal logic (fake send) ====== */
+        const contactBtn = document.getElementById('contactBtn'); const modal = document.getElementById('contactModal');
+        contactBtn.addEventListener('click', () => modal.style.display = 'flex'); document.getElementById('closeC').addEventListener('click', () => modal.style.display = 'none');
+        document.getElementById('sendC').addEventListener('click', () => { document.getElementById('sendC').textContent = 'Sent ✓'; setTimeout(() => { document.getElementById('sendC').textContent = 'Send'; modal.style.display = 'none' }, 900) });
+
+        /* ====== Download / Print ====== */
+        document.getElementById('downloadBtn').addEventListener('click', () => { window.print(); });
+
+        /* ====== Greeting rotates for fun ====== */
+        const greetings = ['Halo — Saya Fajar, the fitness-first developer', 'Hi — Trainer & Frontend dev', 'Hello — Let\'s build fit products']; let gi = 0; setInterval(() => { gi = (gi + 1) % greetings.length; const el = document.getElementById('greeting'); el.style.opacity = 0; setTimeout(() => { el.textContent = greetings[gi]; el.style.opacity = 1 }, 300) }, 4200);
+
+        /* ====== Simple Auto Mode (switch theme/animation intensity) ====== */
+        const auto = document.getElementById('toggleTheme'); auto.addEventListener('change', e => { if (e.target.checked) { document.documentElement.style.setProperty('--accent', '#4ef58a'); particles.forEach(p => p.vx *= 1.3, p.vy *= 1.3); } else { document.documentElement.style.setProperty('--accent', '#ff7a59'); } });
+
+        /* ====== Tiny accessibility: keyboard to open contact ====== */
+        addEventListener('keydown', e => { if (e.key === 'c') { modal.style.display = 'flex' } if (e.key === 'Escape') modal.style.display = 'none' });
+
+        /* ====== Fun: random confetti when hire clicked ====== */
+        document.getElementById('hireBtn').addEventListener('click', e => {
+            for (let i = 0; i < 60; i++) { const p = document.createElement('div'); p.style.position = 'fixed'; p.style.left = (innerWidth / 2 + (Math.random() - 0.5) * 160) + 'px'; p.style.top = (innerHeight / 2 + (Math.random() - 0.5) * 60) + 'px'; p.style.width = '8px'; p.style.height = '10px'; p.style.background = ['#ff7a59', '#ffd56b', '#4ef58a', '#6fb3ff'][Math.floor(Math.random() * 4)]; p.style.opacity = '0.95'; p.style.transform = 'translateY(-40px) rotate(' + Math.random() * 360 + 'deg)'; p.style.borderRadius = '2px'; p.style.zIndex = 999; document.body.appendChild(p); setTimeout(() => { p.style.transition = 'all 900ms cubic-bezier(.2,.9,.2,1)'; p.style.top = (innerHeight + 40) + 'px'; p.style.opacity = 0; }, 10); setTimeout(() => p.remove(), 1200) }
+        });
+
+        /* ====== Small: change favicon color based on accent (demo) ====== */
+        function setFaviconColor() { const c = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); const svg = `<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\"><rect width=\"100%\" height=\"100%\" rx=\"12\" fill=\"${c}\"/></svg>`; const url = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg); let link = document.querySelector('link[rel="icon"]'); if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link) } link.href = url }
+        setFaviconColor();
+
+        /* ====== Tiny: smooth initial entrance ====== */
+        document.querySelector('.wrap').style.opacity = 0; document.querySelector('.wrap').style.transform = 'translateY(14px)'; setTimeout(() => { document.querySelector('.wrap').style.transition = 'all 800ms cubic-bezier(.2,.9,.2,1)'; document.querySelector('.wrap').style.opacity = 1; document.querySelector('.wrap').style.transform = 'translateY(0)' }, 80);
+    </script>
+</body>
+
+</html>

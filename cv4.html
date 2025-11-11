@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Trainer — Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Poppins
+        }
+
+        body {
+            background: #0e0e14;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            height: 90vh;
+            background: url('https://images.unsplash.com/photo-1594737625785-c0f6c5d3faee?auto=format&fit=crop&w=1600&q=80') center/cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        .hero {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            color: #d5d5d5;
+            margin-top: 10px;
+            font-size: 17px;
+        }
+
+        .btn {
+            margin-top: 18px;
+            padding: 12px 28px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 15px;
+            background: #ff5050;
+            cursor: pointer;
+            color: white;
+            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(255, 80, 80, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px)
+        }
+
+        /* gallery */
+        section {
+            padding: 60px 6%;
+        }
+
+        h2.title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .gallery {
+            columns: 3 280px;
+            column-gap: 16px;
+        }
+
+        .gallery img {
+            width: 100%;
+            margin-bottom: 16px;
+            border-radius: 14px;
+            break-inside: avoid;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+            transition: 0.2s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.02);
+        }
+
+        /* profile card */
+        .profile {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .profile-card {
+            background: #171721;
+            padding: 24px;
+            border-radius: 16px;
+            width: 340px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #ff5050;
+        }
+
+        .profile-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .profile-card p {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 10px
+        }
+
+        /* experience */
+        .exp-list {
+            max-width: 700px;
+            margin: 30px auto;
+        }
+
+        .exp {
+            background: #171721;
+            margin-bottom: 16px;
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 6px solid #ff5050;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .exp h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .exp p {
+            color: #c9c9c9;
+            font-size: 14px
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="hero">
+            <h1>FAJAR SIDIK</h1>
+            <p>PERSONAL TRAINER • BODY TRANSFORMATION SPECIALIST</p>
+            <button class="btn" onclick="scrollToGallery()">Lihat Portofolio Foto</button>
+        </div>
+    </header>
+
+    <section id="profile">
+        <h2 class="title">Profil Singkat</h2>
+        <div class="profile">
+            <div class="profile-card">
+                <img src="https://picsum.photos/seed/manfit/300" alt="profile">
+                <h3>Fajar Sidik</h3>
+                <p>22 tahun • Lahir 10 Juli 2003<br>Fitness enthusiast dengan 4 tahun pengalaman latihan otot (sejak
+                    2021). Fokus pada hypertrophy, teknik latihan yang benar, dan konsistensi membangun fisik.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery-section">
+        <h2 class="title">Pengalaman Kerja (Foto)</h2>
+        <p style="text-align:center;color:#aaa;margin-bottom:18px">Foto-foto latihan, coaching, client results, demo
+            workout, dll</p>
+
+        <div class="gallery" id="gallery">
+            <img src="https://images.unsplash.com/photo-1594737625785-c0f6c5d3faee?auto=format&fit=crop&w=900&q=80" />
+            <img src="https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?auto=format&fit=crop&w=900&q=80" />
+            <img src="https://images.unsplash.com/photo-1571388208497-71bedc66e932?auto=format&fit=crop&w=900&q=80" />
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" />
+            <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=900&q=80" />
+            <img src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74?auto=format&fit=crop&w=900&q=80" />
+        </div>
+    </section>
+
+    <section>
+        <h2 class="title">Fitness Experience</h2>
+        <div class="exp-list">
+            <div class="exp">
+                <h4>Self-Trained Bodybuilding</h4>
+                <p>2021 — Sekarang • 4 tahun konsisten melatih otot, fokus pada hypertrophy, teknik latihan yang aman,
+                    muscle-mind connection, serta pemahaman progressive overload.</p>
+            </div>
+            <div class="exp">
+                <h4>Personal Body Transformation</h4>
+                <p>Mengembangkan perubahan fisik secara mandiri melalui disiplin, program latihan terstruktur, pola
+                    makan seimbang, dan pencatatan progres pribadi.</p>
+            </div>
+            <div class="exp">
+                <h4>Fitness Knowledge Development</h4>
+                <p>Belajar secara mandiri seputar anatomi otot, form fundamental, teknik compound & isolation, pemilihan
+                    beban, serta dasar-dasar nutrisi (bulking & cutting).</p>
+            </div>
+            <div class="exp">
+                <h4>Gym Lifestyle & Discipline</h4>
+                <p>Konsisten berlatih dengan rutinitas teratur sejak 2021, memahami etika gym, workout planning, dan
+                    pengelolaan energi (rest & recovery).</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>© 2025 — Portfolio Personal Trainer</footer>
+
+    <script>
+        function scrollToGallery() {
+            document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+
+</html>
